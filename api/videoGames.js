@@ -22,7 +22,8 @@ router.get('/', async (req, res, next) => {
 // GET - /api/video-games/:id - get a single video game by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const videoGame = await getVideoGameById(REPLACE_ME);
+        const id = req.params.id;
+        const videoGame = await getVideoGameById(id);
         res.send(videoGame);
     } catch (error) {
         next(error);
@@ -30,8 +31,20 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST - /api/video-games - create a new video game
-router.patch('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     // LOGIC GOES HERE 
+    try {
+        console.log(req.body);
+        const newGame = req.body;
+        // use createVideoGame and pass the appropriate argument to it.
+        const result = await createVideoGame(newGame);
+        // finally, send the result in our response object
+        console.log(result);
+        res.send(result);
+    } catch (err) {
+        console.error(err)
+}
+    
 });
 
 
@@ -42,6 +55,17 @@ router.put('/:id', async (req, res, next) => {
 
 // DELETE - /api/video-games/:id - delete a single video game by id
 router.delete('/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+         //call the delete game function with the id as an argument
+        const result = await deleteVideoGame(id);
+        console.log(result);
+        // send the result in the response to the origin of the request
+        res.send(result);
+    } catch (err) {
+        console.error(err)
+    }
     // LOGIC GOES HERE
 });
 
